@@ -25,8 +25,21 @@ type CreateTransferParams struct {
 	Amount        int64 `json:"amount"`
 }
 
+// func (q *Queries) CreateTransfer(ctx context.Context, arg CreateTransferParams) (Transfer, error) {
+// 	row := q.queryRow(ctx, q.createTransferStmt, createTransfer, arg.FromAccountID, arg.ToAccountID, arg.Amount)
+// 	var i Transfer
+// 	err := row.Scan(
+// 		&i.ID,
+// 		&i.FromAccountID,
+// 		&i.ToAccountID,
+// 		&i.Amount,
+// 		&i.CreatedAt,
+// 	)
+// 	return i, err
+// }
+
 func (q *Queries) CreateTransfer(ctx context.Context, arg CreateTransferParams) (Transfer, error) {
-	row := q.queryRow(ctx, q.createTransferStmt, createTransfer, arg.FromAccountID, arg.ToAccountID, arg.Amount)
+	row := q.db.QueryRowContext(ctx, createTransfer, arg.FromAccountID, arg.ToAccountID, arg.Amount)
 	var i Transfer
 	err := row.Scan(
 		&i.ID,
