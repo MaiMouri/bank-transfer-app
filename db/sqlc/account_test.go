@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"testing"
+
 	"time"
 
 	"github.com/stretchr/testify/require"
@@ -33,14 +34,6 @@ func createRandomAccount(t *testing.T) Account {
 
 func TestCreateAccount(t *testing.T) {
 	createRandomAccount(t)
-}
-
-func TestAdd(t *testing.T) {
-	a := 2
-	b := 1 + 1
-	require.Equal(t, a, b)
-	require.NotZero(t, a)
-
 }
 
 func TestGetAccount(t *testing.T) {
@@ -90,23 +83,20 @@ func TestDeleteAccount(t *testing.T) {
 }
 
 func TestListAccounts(t *testing.T) {
-	var lastAccount Account
 	for i := 0; i < 10; i++ {
-		lastAccount = createRandomAccount(t)
+		createRandomAccount(t)
 	}
 
 	arg := ListAccountsParams{
-		Owner:  lastAccount.Owner,
 		Limit:  5,
-		Offset: 0,
+		Offset: 5,
 	}
 
 	accounts, err := testQueries.ListAccounts(context.Background(), arg)
 	require.NoError(t, err)
-	require.NotEmpty(t, accounts)
+	require.Len(t, accounts, 5)
 
 	for _, account := range accounts {
 		require.NotEmpty(t, account)
-		require.Equal(t, lastAccount.Owner, account.Owner)
 	}
 }
