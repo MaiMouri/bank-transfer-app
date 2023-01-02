@@ -7,3 +7,5 @@
   go install github.com/kyleconroy/sqlc/cmd/sqlc@latest
 - viper
   https://github.com/spf13/viper
+- mock
+  go install github.com/golang/mock/mockgen@v1.6.0
