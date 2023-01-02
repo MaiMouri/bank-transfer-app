@@ -11,6 +11,7 @@ import (
 
 type createAccountRequest struct {
 	Owner    string `json:"owner" binding:"required"`
+
 	Currency string `json:"currency" binding:"required,oneof=USD EUR"`
 }
 
@@ -34,7 +35,6 @@ func (server *Server) createAccount(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, account)
-
 }
 
 // https://localhost:8080/accounts/:id 「:id」の部分をとる
@@ -59,7 +59,6 @@ func (server *Server) getAccount(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-
 	ctx.JSON(http.StatusOK, account)
 }
 

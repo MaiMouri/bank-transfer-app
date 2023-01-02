@@ -29,7 +29,6 @@ func main() {
 
 	err = server.Start(serverAddress)
 	if err != nil {
-		log.Fatal("can not to db", err)
+		log.Fatal("cannot start server:", err)
 	}
-
 }

@@ -19,6 +19,7 @@ func TestTransferTx(t *testing.T) {
 	n := 5
 	amount := int64(10)
 
+	// Channels handles concurrent goroutine
 	errs := make(chan error)
 	results := make(chan TransferTxResult)
 
@@ -40,6 +41,7 @@ func TestTransferTx(t *testing.T) {
 
 	// check results
 	existed := make(map[int]bool)
+
 
 	for i := 0; i < n; i++ {
 		err := <-errs
@@ -64,6 +66,7 @@ func TestTransferTx(t *testing.T) {
 		fromEntry := result.FromEntry
 		require.NotEmpty(t, fromEntry)
 		require.Equal(t, account1.ID, fromEntry.AccountID)
+    
 		require.Equal(t, -amount, fromEntry.Amount)
 		require.NotZero(t, fromEntry.ID)
 		require.NotZero(t, fromEntry.CreatedAt)
