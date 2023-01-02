@@ -5,8 +5,9 @@ import (
 	"log"
 
 	_ "github.com/lib/pq"
-	"github.com/techschool/simplebank/api"
-	db "github.com/techschool/simplebank/db/sqlc"
+
+	"github.com/MaiMouri/bank-transfer-app/api"
+	db "github.com/MaiMouri/bank-transfer-app/db/sqlc"
 )
 
 const (
@@ -16,9 +17,11 @@ const (
 )
 
 func main() {
+	var err error
+
 	conn, err := sql.Open(dbDriver, dbSource)
 	if err != nil {
-		log.Fatal("cannot connect to db:", err)
+		log.Fatal("can not to db", err)
 	}
 
 	store := db.NewStore(conn)

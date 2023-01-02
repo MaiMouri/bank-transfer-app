@@ -77,3 +77,4 @@ func TestListTransfer(t *testing.T) {
 		require.True(t, transfer.FromAccountID == account1.ID || transfer.ToAccountID == account1.ID)
 	}
 }
+

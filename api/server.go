@@ -1,8 +1,9 @@
 package api
 
 import (
+	db "github.com/MaiMouri/bank-transfer-app/db/sqlc"
+
 	"github.com/gin-gonic/gin"
-	db "github.com/techschool/simplebank/db/sqlc"
 )
 
 type Server struct {
@@ -16,7 +17,9 @@ func NewServer(store *db.Store) *Server {
 
 	router.POST("/accounts", server.createAccount)
 	router.GET("/accounts/:id", server.getAccount)
-	router.GET("/accounts/", server.listAccount)
+	router.GET("/accounts", server.listAccount)
+	router.POST("/accounts/:id", server.updateAccount)
+	router.DELETE("/accounts/delete/:id", server.deleteAccount)
 
 	server.router = router
 	return server
