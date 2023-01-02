@@ -8,18 +8,13 @@ import (
 
 	"github.com/MaiMouri/bank-transfer-app/api"
 	db "github.com/MaiMouri/bank-transfer-app/db/sqlc"
-)
-
-const (
-	dbDriver      = "postgres"
-	dbSource      = "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable"
-	serverAddress = "0.0.0.0:8080"
+	"github.com/MaiMouri/bank-transfer-app/util"
 )
 
 func main() {
-	var err error
+	config, err := util.LoadConfig(".")
 
-	conn, err := sql.Open(dbDriver, dbSource)
+	conn, err := sql.Open(config.DBDriver, config.DBSource)
 	if err != nil {
 		log.Fatal("can not to db", err)
 	}
@@ -27,7 +22,7 @@ func main() {
 	store := db.NewStore(conn)
 	server := api.NewServer(store)
 
-	err = server.Start(serverAddress)
+	err = server.Start(config.ServerAddress)
 	if err != nil {
 		log.Fatal("cannot start server:", err)
 	}
